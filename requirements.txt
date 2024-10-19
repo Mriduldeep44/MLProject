@@ -2,6 +2,9 @@ pandas
 numpy
 seaborn
 matplotlib
--e .
+scikit-learn
+catboost
+xgboost
+#-e .
 ## -e . basically acts as a file indicator i.e basically as a locator 
 ## for the setup.py file that these are the external dependencies written over here
