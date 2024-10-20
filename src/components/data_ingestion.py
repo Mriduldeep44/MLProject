@@ -1,6 +1,6 @@
 import os
 import sys
-import src.components.exception import CustomException
+from src.components.exception import CustomException
 from src.components.logger import logging
 import pandas as pd
 from sklearn.model_selection import train_test_split
@@ -18,6 +18,35 @@ class DataIngestion:
     def initiate_data_ingestion(self): #we are using it for reading the data from the database or any other place
         logging.info("Entered the data ingestion method or component")
         try:
-            df=pd.read_csv("")
-        except:
-            pass
+            df=pd.read_csv("notebook\data\StudentsPerformance.csv") # we can read the data from mongodb, mysql that depends on us.
+            
+            logging.info("Read the dataset as data frame")
+            
+            os.makedirs(os.path.dirname(self.ingestion_config.train_data_path),exist_ok=True) # It will create
+            df.to_csv(self.ingestion_config.raw_data_path,index=False,header=True)
+            
+            
+            
+            logging.info("Train test split initiated")
+            
+            train_set,test_set=train_test_split(df,test_size=0.2,random_state=42)
+            train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
+            test_set.to_csv(self.ingestion_config.test_data_path,index=False,header=True)
+            
+            
+            logging.info("Ingestion of the data has been completed")
+            
+            return(
+                self.ingestion_config.train_data_path,
+                self.ingestion_config.test_data_path,
+                
+                
+            )
+        except Exception as e:
+            raise CustomException(e,sys)
+        
+
+if __name__=='__main__':
+    obj=DataIngestion()
+    obj.initiate_data_ingestion()
+            
