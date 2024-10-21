@@ -5,6 +5,7 @@ matplotlib
 scikit-learn
 catboost
 xgboost
+dill
 #-e .
 ## -e . basically acts as a file indicator i.e basically as a locator 
 ## for the setup.py file that these are the external dependencies written over here
