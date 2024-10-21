@@ -11,6 +11,7 @@ from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import OneHotEncoder,StandardScaler
 from src.components.exception import CustomException
 from src.components.logger import logging
+from src.components.utils import save_object
 
 @dataclass
 class DataTransformationConfig:
@@ -93,7 +94,7 @@ class DataTransformation:
                 input_feature_test_arr,np.array(target_feature_test_df)
             ]
             logging.info("Saved preprocessing object.")
-            save_obj(
+            save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
             )
@@ -101,5 +102,5 @@ class DataTransformation:
                 train_arr,test_arr,self.data_transformation_config.preprocessor_obj_file_path,
             )
             
-        except:
-            pass
+        except Exception as e:
+            raise CustomException(e,sys)
